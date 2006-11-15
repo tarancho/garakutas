@@ -1,0 +1,13 @@
+# -*- mode: makefile; coding: sjis; -*-
+# Copyright (C) 2005 Tadamegu Furukawa
+# $Id: version,v 1.1 2006/11/15 12:08:04 tfuruka1 Exp $
+# $Name:  $
+#
+# ‚È‚ñ‚©à–¾(à–¾‚ğ‚¾‚ç‚¾‚ç‘‚¢‚Ä M-q)
+#
+# $Log: version,v $
+# Revision 1.1  2006/11/15 12:08:04  tfuruka1
+# V‹K’Ç‰Á
+#
+#
+MAKE_VERSION=1.00-BETA-1

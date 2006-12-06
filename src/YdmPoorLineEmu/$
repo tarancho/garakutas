@@ -1,0 +1,23 @@
+; $Id: \044,v 1.1 2006/12/06 15:46:32 tfuruka1 Exp $
+; $Name:  $
+;
+; 自己解凍
+;
+; $Log: \044,v $
+; Revision 1.1  2006/12/06 15:46:32  tfuruka1
+; 新規追加
+;
+$WindowTitle=低機能回線低品質エミュレータの解凍
+$InstallTitle=解凍するフォルダ(解凍後インストーラが起動します)
+$InstallDir=%WORK%
+$Command=YdmmInst.exe
+
+; SFXFLAG_AUTO             (1) : 自動実行する
+; SFXFLAG_OVERWRITE        (2) : 上書き確認の抑制
+; SFXFLAG_CHECKTIME        (8) : タイムスタンプを無視
+; SFXFLAG_ATTRIBUTE       (16) : 属性を展開
+; SFXFLAG_NO_AUTO        (256) : 自動実行しない
+; SFXFLAG_NO_OVERWRITE   (512) : 上書き確認する
+; SFXFLAG_NO_CHECKTIME  (2048) : タイムスタンプをチェック
+; SFXFLAG_NO_ATTRIBUTE  (4096) : 属性を展開しない
+$Flag=10

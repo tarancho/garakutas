@@ -1,0 +1,9 @@
+; $Id: YdmmInst.inf,v 1.1 2006/12/06 15:37:25 tfuruka1 Exp $
+; $Name:  $
+;
+; インストーラ設定ファイル
+;
+; $Log;
+[Install]
+Title=低機能回線低品質エミュレータ
+1=YdmPoorLineEmu.dll

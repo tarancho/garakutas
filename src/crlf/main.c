@@ -1,5 +1,5 @@
 /* -*- mode: c++; coding: sjis-dos; -*-
- * $Id: main.c,v 1.1 2006/11/15 12:08:04 tfuruka1 Exp $
+ * $Id: main.c,v 1.2 2007/10/04 14:49:36 tfuruka1 Exp $
  * $Name:  $
  *
  * 標準入力から読み込んだ値の行末をCRLFに変換し、標準出力に出力します。
@@ -10,6 +10,9 @@
  * るので、フィルターとして使用する事を想定しています。
  *
  * $Log: main.c,v $
+ * Revision 1.2  2007/10/04 14:49:36  tfuruka1
+ * Copyrightの年が間違えてました。
+ *
  * Revision 1.1  2006/11/15 12:08:04  tfuruka1
  * 新規追加
  *
@@ -21,7 +24,7 @@
 #include <sys/stat.h>
 
 #define VERSION "Crlf Version 1.0"
-#define COPYRIGHT "Copyright (c) 2660 T.Furukawa\n\n"\
+#define COPYRIGHT "Copyright (c) 2006 T.Furukawa\n\n"\
         "標準入力又はファイルから読み込んだテキストの改行コードを CR+LF\n"\
         "に変換して標準出力へ出力します。\n\n"\
         "このソフトウエアはフリーソフトウエアです。転載、頒布は入手したアー\n"\

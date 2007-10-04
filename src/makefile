@@ -1,9 +1,12 @@
-# $Id: makefile,v 1.4 2006/12/06 15:40:52 tfuruka1 Exp $
+# $Id: makefile,v 1.5 2007/10/04 14:43:15 tfuruka1 Exp $
 # $Name:  $
 #
 # makeの親玉
 #
 # $Log: makefile,v $
+# Revision 1.5  2007/10/04 14:43:15  tfuruka1
+# MegaFileを追加
+#
 # Revision 1.4  2006/12/06 15:40:52  tfuruka1
 # 単純なコーディングミスを修正しました。
 #
@@ -23,6 +26,7 @@ all :
 	sh -c "(cd ExSleep; nmake)"
 	sh -c "(cd img2java; nmake)"
 	sh -c "(cd lha32; nmake)"
+	sh -c "(cd MegaFile; nmake)"
 	sh -c "(cd wlsfonts; nmake)"
 	sh -c "(cd YdmPoorLineEmu; nmake)"
 
@@ -32,6 +36,7 @@ clean :
 	sh -c "(cd ExSleep; nmake clean)"
 	sh -c "(cd img2java; nmake clean)"
 	sh -c "(cd lha32; nmake clean)"
+	sh -c "(cd MegaFile; nmake clean)"
 	sh -c "(cd wlsfonts; nmake clean)"
 	sh -c "(cd YdmPoorLineEmu; nmake clean)"
 	-rm -fr ../bin/*

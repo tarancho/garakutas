@@ -1,9 +1,12 @@
-# $Id: makefile,v 1.5 2007/10/04 14:43:15 tfuruka1 Exp $
+# $Id: makefile,v 1.6 2011/03/01 11:00:07 tfuruka1 Exp $
 # $Name:  $
 #
 # makeの親玉
 #
 # $Log: makefile,v $
+# Revision 1.6  2011/03/01 11:00:07  tfuruka1
+# teeコマンドを新規追加
+#
 # Revision 1.5  2007/10/04 14:43:15  tfuruka1
 # MegaFileを追加
 #
@@ -21,6 +24,7 @@
 #
 
 all :
+	sh -c "(cd libs/getopt; nmake)"
 	sh -c "(cd batkey; nmake)"
 	sh -c "(cd crlf; nmake)"
 	sh -c "(cd ExSleep; nmake)"
@@ -29,8 +33,10 @@ all :
 	sh -c "(cd MegaFile; nmake)"
 	sh -c "(cd wlsfonts; nmake)"
 	sh -c "(cd YdmPoorLineEmu; nmake)"
+	sh -c "(cd tee nmake)"
 
 clean :
+	sh -c "(cd libs/getopt; nmake clean)"
 	sh -c "(cd batkey; nmake clean)"
 	sh -c "(cd crlf; nmake clean)"
 	sh -c "(cd ExSleep; nmake clean)"
@@ -39,4 +45,5 @@ clean :
 	sh -c "(cd MegaFile; nmake clean)"
 	sh -c "(cd wlsfonts; nmake clean)"
 	sh -c "(cd YdmPoorLineEmu; nmake clean)"
+	sh -c "(cd tee nmake clean)"
 	-rm -fr ../bin/*

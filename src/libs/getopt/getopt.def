@@ -1,0 +1,12 @@
+; $Id: getopt.def,v 1.1 2011/03/01 11:00:07 tfuruka1 Exp $
+; ƒ‚ƒWƒ…[ƒ‹’è‹`
+;
+EXPORTS
+    opterr DATA
+    optind DATA
+    optopt DATA
+    optreset DATA
+    optarg DATA
+
+    getopt_long
+    getopt

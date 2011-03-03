@@ -1,6 +1,5 @@
 /* -*- mode: c++; coding: sjis-dos; -*-
- * $Id: main.c,v 1.2 2007/10/04 14:49:36 tfuruka1 Exp $
- * $Name:  $
+ * $Id: main.c,v 1.3 2011/03/03 13:38:58 tfuruka1 Exp $
  *
  * 標準入力から読み込んだ値の行末をCRLFに変換し、標準出力に出力します。
  *
@@ -9,19 +8,16 @@
  * 一切行なっていません。Cygwinのsed等で処理すると、行末がlfに変換され
  * るので、フィルターとして使用する事を想定しています。
  *
- * $Log: main.c,v $
- * Revision 1.2  2007/10/04 14:49:36  tfuruka1
- * Copyrightの年が間違えてました。
- *
- * Revision 1.1  2006/11/15 12:08:04  tfuruka1
- * 新規追加
- *
+ * 2007/10/04 Copyrightの年が間違えてました。
+ * 2006/11/15 新規追加
  */
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#include "getopt.h"
 
 #define VERSION "Crlf Version 1.0"
 #define COPYRIGHT "Copyright (c) 2006 T.Furukawa\n\n"\
@@ -34,7 +30,7 @@
 #define HELP \
  "  -d, --direct 結果を入力ファイルに書き戻します。\n"\
  "               このオプションを指定した場合、入力ファイルは必須です。\n"\
- "  -?, --help   このヘルプメッセージを表示します。\n"\
+ "  -h, --help   このヘルプメッセージを表示します。\n"\
  "  --usage      簡潔な使用方法を表示します。\n"\
  "  --version    ヴァージョン情報を表示します。\n"\
  "\nReport bugs to <tfuruka1@nifty.com>."
@@ -79,32 +75,38 @@ makeBackupFile(LPTSTR lpFileName)
 int
 main(int argc, char *argv[])
 {
-    int i;
     int c;
+    int option_index;
     BOOL bDirect = FALSE;
+    static struct option options[] = {
+        {"direct", no_argument, NULL, 'd'},
+        {"help", no_argument, NULL, 'h'},
+        {"usage", no_argument, NULL, 'u'},
+        {"version", no_argument, NULL, 'v'},
+        {NULL, 0, NULL, 0}
+    };
 
-    for (i = 1; i < argc; i++) {
-        if ('-' != *argv[i]) {
-            break;
-        }
-        if (0 == strcmp("--version", argv[i])
-            || 0 == strcmp("--v", argv[i])) {
-            showVersion();
-            return 1;
-        } else if (0 == strcmp("--usage", argv[i])) {
-            showUsage();
-            return 1;
-        } else if (0 == strcmp("--help", argv[i])
-                   || 0 == strcmp("-?", argv[i])) {
-            showHelp();
-            return 1;
-        } else if (0 == strcmp("-d", argv[i])
-                   || 0 == strcmp("--direct", argv[i])) {
+    while (-1 != (c = getopt_long (argc, argv, "dh",
+                                   options, &option_index))) {
+        switch (c) {
+        case 'd':
             bDirect = TRUE;
-        } else {
-            fprintf(stderr, "不正なオプションです: %s\n", argv[i]);
+            break;
+        case 'h':
+            showHelp();
+            return 0;
+        case 'u':
             showUsage();
-            return 2;
+            return 0;
+        case 'v':
+            showVersion();
+            return 0;
+        case '?':
+            fprintf(stderr, "詳しくは `crlf --help' を実行して下さい.\n");
+            return 1;
+        default:
+            fprintf(stderr, "想定外のgetoptからの戻り: %c\n", c);
+            return 1;
         }
     }
 
@@ -115,64 +117,72 @@ main(int argc, char *argv[])
         FILE *fp;
         size_t size;
         size_t cnt;
+        int ret;
 
-        if (!argv[i]) {
+        if (!argv[optind]) {
             fprintf(stderr, "-d, --directオプションを指定した場合は"
                     "入力ファイルは必須です。\n");
             return 2;
         }
-
-        if (0 != _stat(argv[i], &stat)) {
-            perror(argv[i]);
-            return 3;
-        }
-
-        if (!(lpBuf = (LPTSTR) malloc(stat.st_size + 1))) {
-            fprintf(stderr, "メモリ不足です。\n");
-            return 3;
-        }
-
-        if (!(fp = fopen(argv[i], "rb"))) {
-            perror(argv[i]);
-            free(lpBuf);
-            return 3;
-        }
-        size = fread(lpBuf, 1, stat.st_size, fp);
-        if (size != (size_t) stat.st_size) {
-            fprintf(stderr, "入力ファイルを最後迄読み込めません。\n"
-                    "\tファイルサイズ: %u\n"
-                    "\t読み込みサイズ: %u\n", stat.st_size, size);
-            free(lpBuf);
-            fclose(fp);
-            return 3;
-        }
-        fclose(fp);
-
-        makeBackupFile(argv[i]);
-
-        if (!(fp = fopen(argv[i], "wt"))) {
-            perror(argv[i]);
-            free(lpBuf);
-            return 3;
-        }
-
-        for (cnt = 0; cnt < size; cnt++) {
-            if ('\r' == *(lpBuf + cnt)) {
+        for (; argv[optind]; optind++) {
+            if (0 != _stat(argv[optind], &stat)) {
+                perror(argv[optind]);
+                ret++;
                 continue;
             }
-            putc(*(lpBuf + cnt), fp);
+
+            if (!(lpBuf = (LPTSTR) malloc(stat.st_size + 1))) {
+                fprintf(stderr, "メモリ不足です。\n");
+                ret++;
+                continue;
+            }
+
+            if (!(fp = fopen(argv[optind], "rb"))) {
+                perror(argv[optind]);
+                free(lpBuf);
+                ret++;
+                continue;
+            }
+            size = fread(lpBuf, 1, stat.st_size, fp);
+            if (size != (size_t) stat.st_size) {
+                fprintf(stderr, "入力ファイルを最後迄読み込めません。\n"
+                        "\tファイルサイズ: %u\n"
+                        "\t読み込みサイズ: %u\n", stat.st_size, size);
+                free(lpBuf);
+                fclose(fp);
+                ret++;
+                continue;
+            }
+            fclose(fp);
+
+            makeBackupFile(argv[optind]);
+
+            if (!(fp = fopen(argv[optind], "wt"))) {
+                perror(argv[optind]);
+                free(lpBuf);
+                ret++;
+                continue;
+            }
+
+            for (cnt = 0; cnt < size; cnt++) {
+                if ('\r' == *(lpBuf + cnt)) {
+                    continue;
+                }
+                putc(*(lpBuf + cnt), fp);
+            }
+            fclose(fp);
+            free(lpBuf);
         }
-        fclose(fp);
-        free(lpBuf);
+        return ret;
     } else {
         //━━━━━━━━━━━━━━━━━━━━━━━━━標準出力へ
-        if (argv[i]) {
+        if (argv[optind]) {
             FILE *fp;
 
             fclose(stdin);
-            fp = freopen(argv[i], "rt", stdin);
+            fp = freopen(argv[optind], "rt", stdin);
             if (!fp) {
-                perror(argv[i]);
+                perror(argv[optind]);
                 return 3;
             }
         }
@@ -183,6 +193,6 @@ main(int argc, char *argv[])
             }
             putc(c, stdout);
         }
+        return 0;
     }
-    return 0;
 }

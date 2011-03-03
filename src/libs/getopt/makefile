@@ -1,6 +1,7 @@
 # -*- mode:makefile; coding:shift_jis-unix -*-
-# $Id: makefile,v 1.1 2011/03/01 11:00:07 tfuruka1 Exp $
+# $Id: makefile,v 1.2 2011/03/03 13:38:58 tfuruka1 Exp $
 
+SHELL=/bin/sh
 O=obj
 DLL=getopt.dll
 OBJS=getopt.$(O) getopt_long.$(O)
@@ -9,8 +10,11 @@ CFLAGS=/Zi /DGETOPT_API=__declspec(dllexport) /W3\
 
 LDFLAGS=/DLL /debug
 
-../../../bin/$(DLL) : $(DLL) test.exe
+../../../bin/$(DLL) : ../../../bin $(DLL) test.exe
 	cp $(DLL) $@
+
+../../../bin :
+	sh -c "mkdir $@"
 
 $(DLL) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) /link $(LDFLAGS) /def:getopt.def /OUT:$@

@@ -1,26 +1,18 @@
-# $Id: makefile,v 1.6 2011/03/01 11:00:07 tfuruka1 Exp $
+# $Id: makefile,v 1.7 2011/03/03 13:38:58 tfuruka1 Exp $
 # $Name:  $
 #
 # makeの親玉
 #
 # $Log: makefile,v $
-# Revision 1.6  2011/03/01 11:00:07  tfuruka1
-# teeコマンドを新規追加
+# Revision 1.7  2011/03/03 13:38:58  tfuruka1
+# getoptに対応等
 #
-# Revision 1.5  2007/10/04 14:43:15  tfuruka1
-# MegaFileを追加
-#
-# Revision 1.4  2006/12/06 15:40:52  tfuruka1
-# 単純なコーディングミスを修正しました。
-#
-# Revision 1.3  2006/12/06 15:37:14  tfuruka1
-# ydmモジュール回線低品質エミュレータを新規追加
-#
-# Revision 1.2  2006/12/06 14:05:40  tfuruka1
-# lha32を新規追加
-#
-# Revision 1.1  2006/11/15 12:08:03  tfuruka1
-# 新規追加
+# 2011/03/01 teeコマンドを新規追加
+# 2007/10/04 MegaFileを追加
+# 2006/12/06 単純なコーディングミスを修正しました。
+# 2006/12/06 ydmモジュール回線低品質エミュレータを新規追加
+# 2006/12/06 lha32を新規追加
+# 2006/11/15 新規追加
 #
 
 all :
@@ -33,7 +25,7 @@ all :
 	sh -c "(cd MegaFile; nmake)"
 	sh -c "(cd wlsfonts; nmake)"
 	sh -c "(cd YdmPoorLineEmu; nmake)"
-	sh -c "(cd tee nmake)"
+	sh -c "(cd tee; nmake)"
 
 clean :
 	sh -c "(cd libs/getopt; nmake clean)"
@@ -45,5 +37,5 @@ clean :
 	sh -c "(cd MegaFile; nmake clean)"
 	sh -c "(cd wlsfonts; nmake clean)"
 	sh -c "(cd YdmPoorLineEmu; nmake clean)"
-	sh -c "(cd tee nmake clean)"
-	-rm -fr ../bin/*
+	sh -c "(cd tee; nmake clean)"
+	-rm -fr ../bin

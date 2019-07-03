@@ -1,24 +1,22 @@
-# -*- mode: makefile; coding: sjis; -*-
+# -*- mode: makefile; coding: utf-8; -*-
 # Copyright (C) 2005 Tadamegu Furukawa
 # $Id: makefile,v 1.1 2006/11/15 12:08:04 tfuruka1 Exp $
 # $Name:  $
 #
-# batkeyÇÃmakefile
+# batkey„ÅÆmakefile
 #
 # $Log: makefile,v $
 # Revision 1.1  2006/11/15 12:08:04  tfuruka1
-# êVãKí«â¡
+# Êñ∞Ë¶èËøΩÂä†
 #
 #
 include version
 
-O = obj
-CFLAGS = /W3 /Zi
-CC = cl
+CC = x86_64-w64-mingw32-gcc
+CC = i686-w64-mingw32-gcc
+CFLAGS=-g -Wall --exec-charset=cp932 --input-charset=utf-8
 
-#O = o
-#CFLAGS = -Wall -g -mno-cygwin
-#CC = gcc
+O = o
 
 EXE = batkey.exe
 OBJS = main.$(O)

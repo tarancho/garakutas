@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
 
-
 static BOOL
 convert(LPTSTR lpszFileName)
 {
@@ -17,7 +16,7 @@ convert(LPTSTR lpszFileName)
         return FALSE;
     }
     
-    printf("    /** %s ‚©‚ç•ÏŠ·‚µ‚½ƒCƒ[ƒWB*/\n", lpszFileName);
+    printf("    /** %s ã‹ã‚‰å¤‰æ›ã—ãŸã‚¤ãƒ¡ãƒ¼ã‚¸ã€‚*/\n", lpszFileName);
     printf("    Image img%d = Toolkit.getDefaultToolkit()."
            "createImage(new byte[] {", idx);
 
@@ -40,8 +39,8 @@ main(int argc, char *argv[])
 {
     int i;
 
-    printf("    /* ’ˆÓ!”z—ñ‚Ì—v‘f”‚ª‘½‰ß‚¬‚éê‡‚ÍƒRƒ“ƒpƒCƒ‹ƒGƒ‰["
-           "‚É‚È‚è‚Ü‚·B*/\n");
+    printf("    /* æ³¨æ„!é…åˆ—ã®è¦ç´ æ•°ãŒå¤šéãã‚‹å ´åˆã¯ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼"
+           "ã«ãªã‚Šã¾ã™ã€‚*/\n");
     for (i = 1; i < argc; i++) {
         convert(argv[i]);
     }

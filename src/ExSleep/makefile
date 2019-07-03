@@ -7,17 +7,19 @@
 # Revision 1.1  2006/11/15 12:08:03  tfuruka1
 # êVãKí«â¡
 #
-O = obj
+CC = x86_64-w64-mingw32-gcc
+CC = i686-w64-mingw32-gcc
+CFLAGS=-g -Wall --exec-charset=cp932 --input-charset=utf-8
+
+O = o
 EXE = ExSleep.exe
 OBJS = main.$(O)
-CFLAGS = /W3 /Zi
-LDFLAGS = /link /debug user32.lib
 
 ../../bin/$(EXE) : $(EXE)
 	cp $(EXE) ../../bin/.
 
 $(EXE) : $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS)
 
 clean :
 	-rm -f *.$(O) *~ *.ilk *.opt *.pdb

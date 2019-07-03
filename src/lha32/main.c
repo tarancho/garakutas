@@ -1,12 +1,12 @@
-/* -*- mode: C; coding: sjis; -*-
+/* -*- mode: C; coding: utf-8; -*-
  * $Id: main.c,v 1.1 2006/12/06 14:05:27 tfuruka1 Exp $
  * $Name:  $
  *
- * LHA ƒRƒ}ƒ“ƒh unlha.dllg—p
+ * LHA ã‚³ãƒãƒ³ãƒ‰ unlha.dllä½¿ç”¨
  *
  * $Log: main.c,v $
  * Revision 1.1  2006/12/06 14:05:27  tfuruka1
- * V‹K’Ç‰Á
+ * æ–°è¦è¿½åŠ 
  *
  */
 #include <windows.h>
@@ -32,10 +32,10 @@ main(int argc, char *argv[])
     printf("%s(Version %1g.%1g)\n", VERSION,
            (double)UnlhaGetVersion() / 100,
            (double)UnlhaGetSubVersion() / 100);
-    
+
     if (1 == argc) {
         printf("USAGE: LHA32 %s\n\n"
-               "Ú×‚ÍUNLHA.DLL‚ÌƒhƒLƒ…ƒƒ“ƒg‚ğQÆ‚µ‚Ä‰º‚³‚¢\n",
+               "è©³ç´°ã¯UNLHA.DLLã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã‚’å‚ç…§ã—ã¦ä¸‹ã•ã„\n",
                "[<command>] [[-<switch>[+|-|0|1|2]]...] "
                "<archive_file_name>[.LZH]"
                "\n\t [[<base_directory_name>\\] "

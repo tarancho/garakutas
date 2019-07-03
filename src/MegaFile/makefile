@@ -1,27 +1,28 @@
 # $Id: makefile,v 1.1 2007/10/04 14:42:58 tfuruka1 Exp $
 # $Name:  $
 #
-# 巨大なファイルの作成
+# 蟾ｨ螟ｧ縺ｪ繝輔ぃ繧､繝ｫ縺ｮ菴懈��
 #
 # $Log: makefile,v $
 # Revision 1.1  2007/10/04 14:42:58  tfuruka1
-# 新規追加
+# 譁ｰ隕剰ｿｽ蜉
 #
 #
-EXE=MegaFile.exe
-OBJS=main.obj
+CC = x86_64-w64-mingw32-gcc
+CC = i686-w64-mingw32-gcc
+CFLAGS=-g -Wall --exec-charset=cp932 --input-charset=utf-8
 
-CFLAGS=/W3 /Zi
-LDFLAGS=/link /debug
+EXE=MegaFile.exe
+OBJS=main.o
 
 ../../bin/$(EXE) : $(EXE)
 	-cp $(EXE) ../../bin/.
 
 $(EXE) : $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS)
 
 clean :
-	-rm -f *.obj *~ *.pdb *.ilk
+	-rm -f *.o *~
 
 clean-all : clean
 	-rm -f *.exe

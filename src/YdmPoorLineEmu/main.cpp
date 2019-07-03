@@ -6,7 +6,7 @@
 
 #include "resource.h"
 
-#define MY_NAME "‰ñü•i¿ƒGƒ~ƒ…ƒŒ[ƒ^"
+#define MY_NAME "å›ç·šå“è³ªã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚¿"
 
 static HINSTANCE g_hInstance = NULL;
 static HWND g_hwndModule;
@@ -22,31 +22,31 @@ Syslog(char *lpszMsg)
     SOCKADDR_IN sin;
     LPHOSTENT lpHost;
 
-    printf("WinSock‰Šú‰»ŠJn...");
+    printf("WinSockåˆæœŸåŒ–é–‹å§‹...");
     fflush(stdout);
 
     if (WSAStartup(MAKEWORD(1, 1), &wsaData) != 0) {
-        printf("‰Šú‰»¸”s\n");
-		return;
-	}
-    printf("Š®—¹\n");
-    printf("%s %s\n", wsaData.szDescription, wsaData.szSystemStatus);
-
-    printf("SOCKETì¬..."); fflush(stdout);
-    if (0 > (finet = socket(AF_INET, SOCK_DGRAM, 0))) {
-        printf("¸”s\n");
+        printf("åˆæœŸåŒ–å¤±æ•—\n");
         return;
     }
-    printf("¬Œ÷\n");
+    printf("å®Œäº†\n");
+    printf("%s %s\n", wsaData.szDescription, wsaData.szSystemStatus);
+
+    printf("SOCKETä½œæˆ..."); fflush(stdout);
+    if (0 > (finet = socket(AF_INET, SOCK_DGRAM, 0))) {
+        printf("å¤±æ•—\n");
+        return;
+    }
+    printf("æˆåŠŸ\n");
 
     lpHost = gethostbyname("localhost");
 
-    printf("syslog serviceŒŸõ’†..."); fflush(stdout);
+    printf("syslog serviceæ¤œç´¢ä¸­..."); fflush(stdout);
     if (NULL == (sp = getservbyname("syslog", "udp"))) {
-        printf("Œ©‚Â‚©‚è‚Ü‚¹‚ñ\n");
+        printf("è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“\n");
         return;
     }
-    printf("ƒ|[ƒg”Ô†%d\n", sp->s_port);
+    printf("ãƒãƒ¼ãƒˆç•ªå·%d\n", sp->s_port);
 
     memset(&sin, 0, sizeof(sin));
     sin.sin_family = AF_INET;
@@ -60,23 +60,23 @@ Syslog(char *lpszMsg)
 BOOL WINAPI
 DllMain(HINSTANCE hInstIn, DWORD fdwReason, LPVOID lpvReserved)
 {
-	if(fdwReason != DLL_PROCESS_ATTACH) {
-		return TRUE;
-	}
-	g_hInstance = hInstIn;
-	return TRUE;
+    if(fdwReason != DLL_PROCESS_ATTACH) {
+        return TRUE;
+    }
+    g_hInstance = hInstIn;
+    return TRUE;
 }
 
 HWND GetWindowHandle() {
-	return g_hwndModule;
+    return g_hwndModule;
 }
 
-/* ƒNƒ‰ƒCƒAƒ“ƒg‚©‚ç‚ÌƒŠƒNƒGƒXƒg‚ª‚ ‚Á‚½ */
+/* ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‹ã‚‰ã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒã‚ã£ãŸ */
 static BOOL
 Requested(HTRANS hTrans) {
-    /* ƒŠƒNƒGƒXƒg‚ª•ªŠ„‚³‚ê‚½ê‡‚Ì‚İƒXƒŠ[ƒv */
+    /* ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒåˆ†å‰²ã•ã‚ŒãŸå ´åˆã®ã¿ã‚¹ãƒªãƒ¼ãƒ— */
     if (!YdmIsReqBuilded(hTrans)) {
-        Syslog("ƒŠƒNƒGƒXƒgƒpƒPƒbƒg•ªŠ„ŒŸo");
+        Syslog("ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‘ã‚±ãƒƒãƒˆåˆ†å‰²æ¤œå‡º");
         if (0 < g_uRagTime) {
             char szBuf[1028];
             wsprintf(szBuf, "%lums wait...", g_uRagTime);
@@ -84,30 +84,30 @@ Requested(HTRANS hTrans) {
             Sleep(g_uRagTime);
         }
     } else {
-        Syslog("ƒŠƒNƒGƒXƒgƒpƒPƒbƒg‚Í•ªŠ„‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+        Syslog("ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‘ã‚±ãƒƒãƒˆã¯åˆ†å‰²ã•ã‚Œã¦ã„ã¾ã›ã‚“");
     }
-	return FALSE;
+    return FALSE;
 }
 
 static BOOL
 Responded(HTRANS hTrans)
 {
-	return FALSE;
+    return FALSE;
 }
 
 static void
 GetModuleTitle(char* pszGet, UINT cbGet) {
-	static char szModuleTitle[] = MY_NAME;
-	if(sizeof(szModuleTitle) >= cbGet) {
+    static char szModuleTitle[] = MY_NAME;
+    if(sizeof(szModuleTitle) >= cbGet) {
         return;
     }
-	lstrcpy(pszGet, szModuleTitle);
+    lstrcpy(pszGet, szModuleTitle);
 }
 
 static long
 GetModuleVersion()
 {
-	return MAKELONG(0, 1);
+    return MAKELONG(0, 1);
 }
 
 static BOOL CALLBACK
@@ -115,7 +115,7 @@ SetupDlgProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     char szBuf[1024];
 
-	switch(message) {
+    switch(message) {
     case WM_INITDIALOG:
         wsprintf(szBuf, "%lu", g_uRagTime);
         SetDlgItemText(hwnd, IDE_RAGTIME, szBuf);
@@ -127,42 +127,42 @@ SetupDlgProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             if (b) {
                 g_uRagTime = l;
             }
-            wsprintf(szBuf, "ƒ‰ƒOƒ^ƒCƒ€ %lu", g_uRagTime);
+            wsprintf(szBuf, "ãƒ©ã‚°ã‚¿ã‚¤ãƒ  %lu", g_uRagTime);
             Syslog(szBuf);
             EndDialog(hwnd, IDOK);
         } else if(LOWORD(wParam) == IDCANCEL) {
             EndDialog(hwnd, IDCANCEL);
         }
-	}
-	return FALSE;
+    }
+    return FALSE;
 }
 
 static void PropertyDialog(HWND hwnd)
 {
-	DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_MAIN), g_hwndModule,
+    DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_MAIN), g_hwndModule,
               (DLGPROC) SetupDlgProc);
 }
 
 static void
 EnumMenu(int i, char* pszGet, UINT cbGet) {
-	char* psz = NULL;
-	if(i == 0) {
-		psz = MY_NAME;
-	} else {
-		return;
-	}
-	if(lstrlen(psz) >= (int)cbGet) {
+    char* psz = NULL;
+    if(i == 0) {
+        psz = MY_NAME;
+    } else {
         return;
     }
-	lstrcpy(pszGet, psz);
-	return;
+    if(lstrlen(psz) >= (int)cbGet) {
+        return;
+    }
+    lstrcpy(pszGet, psz);
+    return;
 }
 
 void MenuSelected(long i) {
-	if(i == 0) {
-		DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_MAIN), g_hwndModule,
+    if(i == 0) {
+        DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_MAIN), g_hwndModule,
                   (DLGPROC)SetupDlgProc);
-	}
+    }
 }
 
 static void
@@ -176,57 +176,57 @@ void RequestPassed( HTRANS hTrans ) {
 static LRESULT CALLBACK
 WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch(message) {
-		case WM_CREATE:
-			g_hwndModule = hwnd;
-			break;
-	}
-	
-	return DefWindowProc(hwnd, message, wParam, lParam);
+    switch(message) {
+        case WM_CREATE:
+            g_hwndModule = hwnd;
+            break;
+    }
+
+    return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
-/* ‰¡æ‚èƒ\ƒtƒg‚Ì‰Šú‰»‚ÉŒÄ‚Ño‚³‚ê‚Ü‚· */
+/* æ¨ªå–ã‚Šã‚½ãƒ•ãƒˆã®åˆæœŸåŒ–æ™‚ã«å‘¼ã³å‡ºã•ã‚Œã¾ã™ */
 DWORD
 YdmInit(HWND hwndYdm)
 {
-	WNDCLASS wc;
+    WNDCLASS wc;
 
-	wc.style = 0;
-	wc.lpfnWndProc = (WNDPROC)WindowProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = g_hInstance;
-	wc.hIcon = NULL;
-	wc.hCursor = NULL;
-	wc.hbrBackground = NULL;
-	wc.lpszMenuName = NULL;
-	wc.lpszClassName = g_szModuleClassName;
-	if(!RegisterClass(&wc)) {
-		return 0;
-	}
+    wc.style = 0;
+    wc.lpfnWndProc = (WNDPROC)WindowProc;
+    wc.cbClsExtra = 0;
+    wc.cbWndExtra = 0;
+    wc.hInstance = g_hInstance;
+    wc.hIcon = NULL;
+    wc.hCursor = NULL;
+    wc.hbrBackground = NULL;
+    wc.lpszMenuName = NULL;
+    wc.lpszClassName = g_szModuleClassName;
+    if(!RegisterClass(&wc)) {
+        return 0;
+    }
 
-	CreateWindowEx(WS_EX_TOOLWINDOW, g_szModuleClassName,
+    CreateWindowEx(WS_EX_TOOLWINDOW, g_szModuleClassName,
                    g_szModuleClassName,
                    WS_CHILD, 0, 0, 0, 0, hwndYdm, NULL, g_hInstance, NULL);
-	return 0;
+    return 0;
 }
 
-/* ‰¡æ‚èƒ‚ƒWƒ…[ƒ‹‚ÌI—¹‚ÉŒÄ‚Ño‚³‚ê‚Ü‚·B•K—v‚É‰‚¶‚ÄA©•ª©g‚Ì
- * İ’èŠÖŒW‚Ì•Û‘¶AƒEƒBƒ“ƒhƒE‚Ì”jŠü‚È‚Ç‚ğ‚µ‚Ä‚­‚¾‚³‚¢B
+/* æ¨ªå–ã‚Šãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®çµ‚äº†æ™‚ã«å‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚å¿…è¦ã«å¿œã˜ã¦ã€è‡ªåˆ†è‡ªèº«ã®
+ * è¨­å®šé–¢ä¿‚ã®ä¿å­˜ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç ´æ£„ãªã©ã‚’ã—ã¦ãã ã•ã„ã€‚
  */
 DWORD
 YdmRelease(HWND hwndYdm)
 {
-	return 0;
+    return 0;
 }
 
-/* ƒŠƒNƒGƒXƒgCƒŒƒXƒ|ƒ“ƒX‚È‚Ç‚ª‚ ‚Á‚½‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚éŠÖ”‚Å‚·Bƒƒb
- * ƒZ[ƒW‚É‚æ‚Á‚ÄˆÓ–¡‚ªˆÙ‚È‚è‚Ü‚·B
+/* ãƒªã‚¯ã‚¨ã‚¹ãƒˆï¼Œãƒ¬ã‚¹ãƒãƒ³ã‚¹ãªã©ãŒã‚ã£ãŸã¨ãã«å‘¼ã³å‡ºã•ã‚Œã‚‹é–¢æ•°ã§ã™ã€‚ãƒ¡ãƒƒ
+ * ã‚»ãƒ¼ã‚¸ã«ã‚ˆã£ã¦æ„å‘³ãŒç•°ãªã‚Šã¾ã™ã€‚
  */
 DWORD
 YdmProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch (message) {
+    switch (message) {
     case YDM_GETWINDOWHANDLE:
         return (DWORD)GetWindowHandle();
     case YDM_REQUESTED:
@@ -253,7 +253,6 @@ YdmProc(UINT message, WPARAM wParam, LPARAM lParam)
     case YDM_MENUSELECTED:
         MenuSelected((int)wParam);
         return 0;
-	}
-	return 0;
+    }
+    return 0;
 }
-

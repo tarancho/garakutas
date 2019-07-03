@@ -1,8 +1,8 @@
 /* $Id: main.c,v 1.1 2011/03/01 11:00:07 tfuruka1 Exp $
  *
- * tee�R�}���h�̃N���[��
+ * teeコマンドのクローン
  *
- * tee�R�}���h���g�p�ł��Ȃ����̏ꍇ�ɃR���p�C�����Ďg�p����B
+ * teeコマンドを使用できない環境の場合にコンパイルして使用する。
  */
 #include <stdio.h>
 #include <stdarg.h>
@@ -32,8 +32,8 @@
 
 typedef struct _list {
     struct _list *next;
-    int fd;     /* �t�@�C���L�q�q */
-    char *name; /* argv����擾�����t�@�C���� */
+    int fd;     /* ファイル記述子 */
+    char *name; /* argvから取得したファイル名 */
 } LIST;
 LIST *head;
 
@@ -42,27 +42,27 @@ showVersion()
 {
     printf("tee (clone) %s\n"
            "Copyright (C) 2011 T.Furukawa.\n"
-           "tee�R�}���h�̃N���[���ł��B\n",
+           "teeコマンドのクローンです。\n",
            VERSION);
 }
 
 static void
 showHelp()
 {
-    printf("�g�p�@: tee [�I�v�V����]... [�t�@�C��]...\n"
-           "�W�����͂��e�X�̃t�@�C���ɃR�s�[��, �W���o�͂ɂ��o��.\n"
+    printf("使用法: tee [オプション]... [ファイル]...\n"
+           "標準入力を各々のファイルにコピーし, 標準出力にも出力.\n"
            "\n"
-           "  -a, --append            �w�肳�ꂽ�t�@�C���ɒǉ���,"
-           " �㏑�����Ȃ�\n"
-           "  -i, --ignore-interrupts �����݃V�O�i���𖳎�\n"
-           "  --help     ���̎g������\�����ďI��\n"
-           "  --version  �o�[�W��������\�����ďI��\n"
+           "  -a, --append            指定されたファイルに追加し,"
+           " 上書きしない\n"
+           "  -i, --ignore-interrupts 割込みシグナルを無視\n"
+           "  --help     この使い方を表示して終了\n"
+           "  --version  バージョン情報を表示して終了\n"
            "\n"
-           "�t�@�C���� - ���w�肵���ꍇ�́A�ēx�A�W���o�͂ɏo�͂��܂�.\n"
+           "ファイルに - を指定した場合は、再度、標準出力に出力します.\n"
            "\n"
-           "�{�R�}���h�̓I���W�i����tee�R�}���h�̋����Ɠ��l�ɂȂ�悤��"
-           "T.Furukawa�������������̂ł��B"
-           "�]���āA�I���W�i���ƈقȂ镔�������邩������܂���B\n");
+           "本コマンドはオリジナルのteeコマンドの挙動と同様になるように"
+           "T.Furukawaが実装したものです。"
+           "従って、オリジナルと異なる部分もあるかもしれません。\n");
 }
 
 static void
@@ -75,11 +75,11 @@ err(int exitCode, char *msg)
 static void
 warn(char *lpFmt, ...)
 {
-    va_list args;                               // �����W�J�p
+    va_list args;                               // 引数展開用
 
     fprintf(stderr, "tee: ");
 
-    // ������������ɍ����Đ��`����
+    // 文字列を書式に合せて整形する
     va_start(args, lpFmt);
     vfprintf(stderr, lpFmt, args);
     va_end(args);
@@ -130,28 +130,28 @@ main(int argc, char *argv[])
                 showVersion();
                 return 0;
             } else {
-                fprintf(stderr, "����������܂���: %s",
+                fprintf(stderr, "処理がありません: %s",
                         options[option_index].name);
                 return 1;
             }
         case 'a':
-            /* �t�@�C���֒ǋL���� */
+            /* ファイルへ追記する */
             append = 1;
             break;
         case 'i':
-            /* SIGINT�𖳎����� */
+            /* SIGINTを無視する */
             signal(SIGINT, SIG_IGN);
             break;
         case '?':
-            fprintf(stderr, "�ڂ����� `tee --help' �����s���ĉ�����.\n");
+            fprintf(stderr, "詳しくは `tee --help' を実行して下さい.\n");
             return 1;
         default:
-            fprintf(stderr, "�z��O��getopt����̖߂�: %c\n", c);
+            fprintf(stderr, "想定外のgetoptからの戻り: %c\n", c);
             return 1;
         }
     }
 
-    /* �o�b�t�@�̈�̊m�� */
+    /* バッファ領域の確保 */
     if (NULL == (buf = malloc((size_t)BSIZE))) {
         err(1, "malloc");
     }
@@ -195,7 +195,7 @@ main(int argc, char *argv[])
 
     for (p = head; p; p = p->next) {
         if (STDOUT_FILENO == p->fd) {
-            // �W���o�͕͂�����g�p�ł���̂ŁA�����ł͕��Ȃ��B
+            // 標準出力は複数回使用できるので、ここでは閉じない。
             continue;
         }
         if (_close(p->fd) == -1) {

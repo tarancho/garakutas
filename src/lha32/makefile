@@ -3,26 +3,27 @@
 #
 # lha32
 #
-# •Ê“r UNLHA32.DLL —p‚ÌƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹‚Æƒ‰ƒCƒuƒ‰ƒŠƒtƒ@ƒCƒ‹‚ª•K—v
-# ‚Å‚·B
+# åˆ¥é€” UNLHA32.DLL ç”¨ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ãŒå¿…è¦
+# ã§ã™ã€‚
 #
 # $Log: makefile,v $
 # Revision 1.1  2006/12/06 14:05:30  tfuruka1
-# V‹K’Ç‰Á
+# æ–°è¦è¿½åŠ 
 #
 
-# unlha32.dll ‚Ìincludeƒtƒ@ƒCƒ‹“™‚ÌêŠ
-UNLHA_BASE_DIR=../../../other-c-apis/unlha32
+CC = x86_64-w64-mingw32-gcc
+CC = i686-w64-mingw32-gcc
+
+# unlha32.dll ã®includeãƒ•ã‚¡ã‚¤ãƒ«ç­‰ã®å ´æ‰€
+UNLHA_BASE_DIR="/Program Files (x86)/ArchiverDll/UNLHA32"
 INC_DIR=$(UNLHA_BASE_DIR)
 LIBS_DIR=$(UNLHA_BASE_DIR)
 
 EXE = lha32.exe
+OBJS = main.o
 
-OBJS = main.obj
-
-CFLAGS = /Zi /W3 /I$(INC_DIR)
-
-LDFLAGS = /link /LIBPATH:$(LIBS_DIR) UNLHAVC.LIB
+CFLAGS=-g -Wall --exec-charset=cp932 --input-charset=utf-8 -I $(INC_DIR)
+LDFLAGS = -L $(LIBS_DIR) -lUNLHA32
 
 ../../bin/$(EXE) : $(EXE)
 	-cp $(EXE) ../../bin/.
@@ -32,7 +33,7 @@ $(EXE) : $(OBJS)
 	$(CC) $(CLFAGS) -o $@ $(OBJS) $(LDFLAGS)
 
 clean:
-	-rm -f *.obj *~ *.pdb
+	-rm -f *.o *~
 
 clean-all : clean
 	-rm -f *.exe

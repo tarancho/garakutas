@@ -1,12 +1,12 @@
-/* -*- mode: c++; coding:sjis; -*-
+/* -*- mode: c++; coding: utf-8; -*-
  * $Id: main.c,v 1.1 2006/11/15 12:08:03 tfuruka1 Exp $
  * $Name:  $
  *
- * ‘­‚ÉŒ¾‚¤ƒXƒŠ[ƒv
+ * ä¿—ã«è¨€ã†ã‚¹ãƒªãƒ¼ãƒ—
  *
  * $Log: main.c,v $
  * Revision 1.1  2006/11/15 12:08:03  tfuruka1
- * V‹K’Ç‰Á
+ * æ–°è¦è¿½åŠ 
  *
  */
 #include <windows.h>
@@ -29,7 +29,7 @@ main(int argc, char *argv[])
         if (0 == strnicmp(argv[i], OPT_FEEDBACK, strlen(OPT_FEEDBACK))) {
             nFeedBack = atoi(strchr(argv[i], '=') + 1);
         }
-        // ƒIƒvƒVƒ‡ƒ“‚ÍŒã‚Å
+        // ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã¯å¾Œã§
     }
     if (!argv[i]) {
         return 0;

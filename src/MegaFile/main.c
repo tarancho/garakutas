@@ -1,12 +1,12 @@
-/* -*- mode: c++; coding: sjis; -*-
+/* -*- mode: c++; coding: utf-8; -*-
  * $Id: main.c,v 1.1 2007/10/04 14:42:58 tfuruka1 Exp $
  * $Name:  $
  *
- * ‹‘å‚Èƒtƒ@ƒCƒ‹‚ğ¶¬‚·‚é
+ * å·¨å¤§ãªãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã™ã‚‹
  *
  * $Log: main.c,v $
  * Revision 1.1  2007/10/04 14:42:58  tfuruka1
- * V‹K’Ç‰Á
+ * æ–°è¦è¿½åŠ 
  *
  */
 #include <windows.h>
@@ -15,17 +15,17 @@
 
 #define VERSION "MegaFile Version 1.0"
 #define COPYRIGHT "Copyright (c) 2007 T.Furukawa\n\n"\
-        "‹‘å‚Èƒtƒ@ƒCƒ‹‚ğì¬‚·‚é‚¾‚¯‚Ìƒc[ƒ‹‚Å‚·B\n"\
-        "ƒtƒ@ƒCƒ‹‚Í1MB’PˆÊ(’A‚µ1KB=1024Byte)‚É‚È‚è‚Ü‚·B\n\n"\
-        "‚±‚Ìƒ\ƒtƒgƒEƒGƒA‚ÍƒtƒŠ[ƒ\ƒtƒgƒEƒGƒA‚Å‚·B“]ÚA”Ğ•z‚Í“üè‚µ‚½ƒA[\n"\
-        "ƒJƒCƒu‚Ì‚Ü‚Ü‚Å‚ ‚ê‚ÎA©—R‚És‚Á‚Ä‚­‚¾‚³‚¢B"
+        "å·¨å¤§ãªãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã™ã‚‹ã ã‘ã®ãƒ„ãƒ¼ãƒ«ã§ã™ã€‚\n"\
+        "ãƒ•ã‚¡ã‚¤ãƒ«ã¯1MBå˜ä½(ä½†ã—1KB=1024Byte)ã«ãªã‚Šã¾ã™ã€‚\n\n"\
+        "ã“ã®ã‚½ãƒ•ãƒˆã‚¦ã‚¨ã‚¢ã¯ãƒ•ãƒªãƒ¼ã‚½ãƒ•ãƒˆã‚¦ã‚¨ã‚¢ã§ã™ã€‚è»¢è¼‰ã€é ’å¸ƒã¯å…¥æ‰‹ã—ãŸã‚¢ãƒ¼\n"\
+        "ã‚«ã‚¤ãƒ–ã®ã¾ã¾ã§ã‚ã‚Œã°ã€è‡ªç”±ã«è¡Œã£ã¦ãã ã•ã„ã€‚"
 #define USAGE "Usage: MegaFile [--usage] [--version] [--help] "\
         "<FileName> <Size>"
 
 #define HELP \
- "  -?, --help   ‚±‚Ìƒwƒ‹ƒvƒƒbƒZ[ƒW‚ğ•\¦‚µ‚Ü‚·B\n"\
- "  --usage      ŠÈŒ‰‚Èg—p•û–@‚ğ•\¦‚µ‚Ü‚·B\n"\
- "  --version    ƒ”ƒ@[ƒWƒ‡ƒ“î•ñ‚ğ•\¦‚µ‚Ü‚·B\n"\
+ "  -?, --help   ã“ã®ãƒ˜ãƒ«ãƒ—ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚\n"\
+ "  --usage      ç°¡æ½”ãªä½¿ç”¨æ–¹æ³•ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚\n"\
+ "  --version    ãƒ´ã‚¡ãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚\n"\
  "\nReport bugs to <tfuruka1@nifty.com>."
 
 static void
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
             showHelp();
             return 1;
         } else {
-            fprintf(stderr, "•s³‚ÈƒIƒvƒVƒ‡ƒ“‚Å‚·: %s\n", argv[i]);
+            fprintf(stderr, "ä¸æ­£ãªã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ã™: %s\n", argv[i]);
             showUsage();
             return 2;
         }
@@ -81,35 +81,35 @@ int main(int argc, char *argv[])
 
     lpszFileName = argv[i];
     if (!lpszFileName) {
-        fprintf(stderr, "ƒtƒ@ƒCƒ‹–¼‚ğw’è‚µ‚Ä‰º‚³‚¢B\n");
+        fprintf(stderr, "ãƒ•ã‚¡ã‚¤ãƒ«åã‚’æŒ‡å®šã—ã¦ä¸‹ã•ã„ã€‚\n");
         showUsage();
         return 3;
     }
     if (!argv[i + 1]) {
-        fprintf(stderr, "ƒtƒ@ƒCƒ‹ƒTƒCƒY‚ğMB’PˆÊ‚Åw’è‚µ‚Ä‰º‚³‚¢B\n");
+        fprintf(stderr, "ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã‚’MBå˜ä½ã§æŒ‡å®šã—ã¦ä¸‹ã•ã„ã€‚\n");
         showUsage();
         return 4;
     }
     cbMB = strtoul(argv[i + 1], NULL, 10);
     if (!cbMB) {
-        fprintf(stderr, "ƒtƒ@ƒCƒ‹ƒTƒCƒY‚ª•s³‚Å‚·: %sn", argv[i + 1]);
+        fprintf(stderr, "ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºãŒä¸æ­£ã§ã™: %sn", argv[i + 1]);
         showUsage();
         return 5;
     }
 
     if (!(fp = fopen(lpszFileName, "wb"))) {
-        fprintf(stderr, "ƒtƒ@ƒCƒ‹‚ğì¬‚Å‚«‚Ü‚¹‚ñB%s\n", _strerror(0));
+        fprintf(stderr, "ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã§ãã¾ã›ã‚“ã€‚%s\n", _strerror(0));
         return 6;
     }
     for (i = 0; i < cbMB - 1; i++) {
         if (0 != fseek(fp, 1024 * 1024, SEEK_CUR)) {
-            fprintf(stderr, "ƒV[ƒNƒGƒ‰[: %s\n", _strerror(0));
+            fprintf(stderr, "ã‚·ãƒ¼ã‚¯ã‚¨ãƒ©ãƒ¼: %s\n", _strerror(0));
             fclose(fp);
             return 7;
         }
     }
     if (0 != fseek(fp, 1024 * 1024 - 6, SEEK_CUR)) {
-        fprintf(stderr, "ƒV[ƒNƒGƒ‰[: %s\n", _strerror(0));
+        fprintf(stderr, "ã‚·ãƒ¼ã‚¯ã‚¨ãƒ©ãƒ¼: %s\n", _strerror(0));
         fclose(fp);
         return 7;
     }

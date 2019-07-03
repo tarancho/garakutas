@@ -7,6 +7,11 @@
 # Revision 1.7  2011/03/03 13:38:58  tfuruka1
 # getoptに対応等
 #
+# MinGWについて
+#  * 横取り丸については、現在は保留
+#
+# 2019/07/03 MinGWへ変更。getopt は最早不要となりました。CPU100,
+#            TVMaker を追加。
 # 2011/03/01 teeコマンドを新規追加
 # 2007/10/04 MegaFileを追加
 # 2006/12/06 単純なコーディングミスを修正しました。
@@ -16,26 +21,28 @@
 #
 
 all :
-	sh -c "(cd libs/getopt; nmake)"
-	sh -c "(cd batkey; nmake)"
-	sh -c "(cd crlf; nmake)"
-	sh -c "(cd ExSleep; nmake)"
-	sh -c "(cd img2java; nmake)"
-	sh -c "(cd lha32; nmake)"
-	sh -c "(cd MegaFile; nmake)"
-	sh -c "(cd wlsfonts; nmake)"
-	sh -c "(cd YdmPoorLineEmu; nmake)"
-	sh -c "(cd tee; nmake)"
+	cd batkey; make
+	cd CPU100; make
+	cd crlf; make
+	cd ExSleep; make
+	cd img2java; make
+	cd lha32; make
+	cd MegaFile; make
+	cd TVMaker; make
+	cd tee; make
+	cd wlsfonts; make
+#	cd YdmPoorLineEmu; make
 
 clean :
-	sh -c "(cd libs/getopt; nmake clean)"
-	sh -c "(cd batkey; nmake clean)"
-	sh -c "(cd crlf; nmake clean)"
-	sh -c "(cd ExSleep; nmake clean)"
-	sh -c "(cd img2java; nmake clean)"
-	sh -c "(cd lha32; nmake clean)"
-	sh -c "(cd MegaFile; nmake clean)"
-	sh -c "(cd wlsfonts; nmake clean)"
-	sh -c "(cd YdmPoorLineEmu; nmake clean)"
-	sh -c "(cd tee; nmake clean)"
-	-rm -fr ../bin
+	cd batkey; make clean
+	cd CPU100; make clean
+	cd crlf; make clean
+	cd ExSleep; make clean
+	cd img2java; make clean
+	cd lha32; make clean
+	cd MegaFile; make clean
+	cd TVMaker; make clean
+	cd tee; make clean
+	cd wlsfonts; make clean
+#	cd YdmPoorLineEmu; make clean
+	-rm -f ../bin/*.exe ../bin/*.cmd ../bin/*.dll

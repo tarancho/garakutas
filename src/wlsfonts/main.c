@@ -1,18 +1,17 @@
-/* -*- mode: c; coding: sjis -*-
- * Time-stamp: <2006-11-15 20:24:45 tfuruka1>
+/* -*- mode: c; coding: utf-8 -*-
  * Copyright (C) 2002, 2003, 2006 Tadamegu Furukawa
  * $Id: main.c,v 1.1 2006/11/15 12:08:04 tfuruka1 Exp $
  * $Name:  $
  *
- * ƒtƒHƒ“ƒg‚ğ•\¦‚·‚é‚¾‚¯‚Å‚·B
+ * ãƒ•ã‚©ãƒ³ãƒˆã‚’è¡¨ç¤ºã™ã‚‹ã ã‘ã§ã™ã€‚
  *
- *  •K—v‚Èƒ‰ƒCƒuƒ‰ƒŠ: gdi32
- * 
+ *  å¿…è¦ãªãƒ©ã‚¤ãƒ–ãƒ©ãƒª: gdi32
+ *
  *  cl /W3 lsfont.c /link gdi32.lib
  *
  * $Log: main.c,v $
  * Revision 1.1  2006/11/15 12:08:04  tfuruka1
- * V‹K’Ç‰Á
+ * æ–°è¦è¿½åŠ 
  *
  */
 #include <windows.h>
@@ -43,22 +42,22 @@ int CALLBACK EnumFontFamProc(
     if (bLongFormat) {
         lpLf = &lpelf->elfLogFont;
 
-        printf(", %d, ", lpLf->lfHeight);
-        printf("%d, ", lpLf->lfWidth);
-        printf("%d, ", lpLf->lfEscapement);
-        printf("%d, ", lpLf->lfOrientation);
-        printf("%d, ", lpLf->lfWeight);
+        printf(", %d, ", (int) lpLf->lfHeight);
+        printf("%d, ", (int) lpLf->lfWidth);
+        printf("%d, ", (int) lpLf->lfEscapement);
+        printf("%d, ", (int) lpLf->lfOrientation);
+        printf("%d, ", (int) lpLf->lfWeight);
         printf("%s, ", lpLf->lfItalic ? "true" : "false");
         printf("%s, ", lpLf->lfUnderline ? "true" : "false");
         printf("%s, ", lpLf->lfStrikeOut ? "true" : "false");
-        //-- •¶šƒZƒbƒg
+        //-- æ–‡å­—ã‚»ãƒƒãƒˆ
         printf("%x - ", lpLf->lfCharSet);
         printf("%s, ", ANSI_CHARSET == lpLf->lfCharSet ? "ANSI" :
                (OEM_CHARSET == lpLf->lfCharSet ? "OEM" :
                 (SYMBOL_CHARSET == lpLf->lfCharSet ? "SYMBOL" :
                  (DEFAULT_CHARSET == lpLf->lfCharSet ? "DEFAULT" :
                   (SHIFTJIS_CHARSET == lpLf->lfCharSet ? "SJIS" :
-                   "•s–¾")))));
+                   "ä¸æ˜")))));
         //--
         printf("%x, ", lpLf->lfOutPrecision);
         printf("%x, ", lpLf->lfClipPrecision);
@@ -71,7 +70,8 @@ int CALLBACK EnumFontFamProc(
     return 1;
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
     int i;
     HDC hDC = CreateDC("DISPLAY", NULL, NULL, NULL);
@@ -89,11 +89,11 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    printf("ƒtƒHƒ“ƒg–¼, ƒXƒ^ƒCƒ‹, í—Ş");
+    printf("ãƒ•ã‚©ãƒ³ãƒˆå, ã‚¹ã‚¿ã‚¤ãƒ«, ç¨®é¡");
     if (bLongFormat) {
-        printf(", ‚‚³, •, sŠp“x, ƒx[ƒXƒ‰ƒCƒ“Šp“x, ‘¾‚³, "
-               "Î‘Ì, ‰ºü, ‘ÅÁ, •¶šƒZƒbƒg, o—Í¸“x, ƒNƒŠƒbƒsƒ“ƒO¸“x, "
-               "o—Í•i¿, ƒsƒbƒ`‚Æƒtƒ@ƒ~ƒŠ, ‘‘Ì–¼");
+        printf(", é«˜ã•, å¹…, è¡Œè§’åº¦, ãƒ™ãƒ¼ã‚¹ãƒ©ã‚¤ãƒ³è§’åº¦, å¤ªã•, "
+               "æ–œä½“, ä¸‹ç·š, æ‰“æ¶ˆ, æ–‡å­—ã‚»ãƒƒãƒˆ, å‡ºåŠ›ç²¾åº¦, ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ç²¾åº¦, "
+               "å‡ºåŠ›å“è³ª, ãƒ”ãƒƒãƒã¨ãƒ•ã‚¡ãƒŸãƒª, æ›¸ä½“å");
     }
     printf("\n");
     EnumFontFamilies(hDC, argv[i] ? argv[i] : NULL,

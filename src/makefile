@@ -1,29 +1,26 @@
 # $Id: makefile,v 1.7 2011/03/03 13:38:58 tfuruka1 Exp $
 # $Name:  $
 #
-# make‚Ìe‹Ê
+# makeã®è¦ªç‰
 #
-# $Log: makefile,v $
-# Revision 1.7  2011/03/03 13:38:58  tfuruka1
-# getopt‚É‘Î‰“™
+# MinGWã«ã¤ã„ã¦
+#  * æ¨ªå–ã‚Šä¸¸ã«ã¤ã„ã¦ã¯ã€ç¾åœ¨ã¯ä¿ç•™
 #
-# MinGW‚É‚Â‚¢‚Ä
-#  * ‰¡æ‚èŠÛ‚É‚Â‚¢‚Ä‚ÍAŒ»İ‚Í•Û—¯
-#
-# 2019/07/03 MinGW‚Ö•ÏXBgetopt ‚ÍÅ‘•s—v‚Æ‚È‚è‚Ü‚µ‚½BCPU100,
-#            TVMaker ‚ğ’Ç‰ÁB
-# 2011/03/01 teeƒRƒ}ƒ“ƒh‚ğV‹K’Ç‰Á
-# 2007/10/04 MegaFile‚ğ’Ç‰Á
-# 2006/12/06 ’Pƒ‚ÈƒR[ƒfƒBƒ“ƒOƒ~ƒX‚ğC³‚µ‚Ü‚µ‚½B
-# 2006/12/06 ydmƒ‚ƒWƒ…[ƒ‹‰ñü’á•i¿ƒGƒ~ƒ…ƒŒ[ƒ^‚ğV‹K’Ç‰Á
-# 2006/12/06 lha32‚ğV‹K’Ç‰Á
-# 2006/11/15 V‹K’Ç‰Á
+# 2019/07/03 MinGWã¸å¤‰æ›´ã€‚getopt ã¯æœ€æ—©ä¸è¦ã¨ãªã‚Šã¾ã—ãŸã€‚CPU100,
+#            TVMaker ã‚’è¿½åŠ ã€‚
+# 2011/03/01 teeã‚³ãƒãƒ³ãƒ‰ã‚’æ–°è¦è¿½åŠ 
+# 2007/10/04 MegaFileã‚’è¿½åŠ 
+# 2006/12/06 å˜ç´”ãªã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ãƒŸã‚¹ã‚’ä¿®æ­£ã—ã¾ã—ãŸã€‚
+# 2006/12/06 ydmãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å›ç·šä½å“è³ªã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚¿ã‚’æ–°è¦è¿½åŠ 
+# 2006/12/06 lha32ã‚’æ–°è¦è¿½åŠ 
+# 2006/11/15 æ–°è¦è¿½åŠ 
 #
 
 all :
 	cd batkey; make
 	cd CPU100; make
 	cd crlf; make
+	cd dedup; make
 	cd ExSleep; make
 	cd img2java; make
 	cd lha32; make
@@ -37,6 +34,7 @@ clean :
 	cd batkey; make clean
 	cd CPU100; make clean
 	cd crlf; make clean
+	cd dedup; make clean
 	cd ExSleep; make clean
 	cd img2java; make clean
 	cd lha32; make clean

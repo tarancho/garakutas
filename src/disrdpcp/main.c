@@ -6,6 +6,37 @@
 #include <windows.h>
 #include <getopt.h>
 
+/*--------------------------------------------------------------------
+ * dwErr で指定されたエラーコードに対応するエラーメッセージを関数にシ
+ * ステムメッセージテーブルリソースから検索して一時的な文字列へのポイ
+ * ンタを返却する。dwErr は GetLastError から得た値を指定する事。lpsz
+ * はエラーメッセージへ追加する文字列を指定する。API 名等を指定する。
+ * *-------------------------------------------------------------------*/
+static LPCSTR WINAPI
+GetLastErrorMessage(LPCSTR lpsz, DWORD dwErr)
+{
+    static char sz[1024];
+    char szTmp[256];
+    DWORD i;
+
+    if (!(i = FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM |
+                            FORMAT_MESSAGE_IGNORE_INSERTS,
+                            NULL, dwErr, 0, szTmp, sizeof(szTmp), NULL))) {
+        strcpy(szTmp, "---");
+    } else {
+        szTmp[i] = '\0';
+        for (i--; 0 <= (int) i; i--) {
+            if ('\n' == szTmp[i] || '\r' == szTmp[i]) {
+                szTmp[i] = '\0';
+            }
+        }
+    }
+    wsprintf(sz, "[WIN32] %s: Error Code = %d(%#02x): %s",
+             lpsz, dwErr, dwErr, szTmp);
+    return (LPCTSTR)sz;
+}
+
+
 static void
 easyEncript(char *str)
 {
@@ -44,9 +75,11 @@ main(int argc, char *argv[])
     // SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp
     char szSubKey[128] = "TZTUFN"
         "]DvssfouDpouspmTfu]Dpouspm]Ufsnjobm!Tfswfs]XjoTubujpot]SEQ.Udq";
-    char szValueNames[3][80] = {"gEjtbcmfDen",  // "fDisableCdm"
-                                "gEjtbcmfDmjq", //"fDisableClip"
-                                "\0"};
+    char szValueNames[][80] = {
+        "gEjtbcmfDen",  // "fDisableCdm"
+        "gEjtbcmfDmjq", // "fDisableClip"
+        "\0"
+    };
     int i;
     int c;
 
@@ -90,8 +123,12 @@ main(int argc, char *argv[])
     if (ERROR_SUCCESS != dwResult) {
         // エラー
         hResult = HRESULT_FROM_WIN32(dwResult);
-        fprintf(stderr, "Registory Open error: %lx\n", hResult);
-        MessageBox(NULL, TEXT("エラーが発生しました。"), TEXT("エラー"),
+        fprintf(stderr, "%s %lx\n",
+                GetLastErrorMessage("Registory Open", dwResult), hResult);
+        MessageBox(NULL, TEXT("エラーが発生しました。"
+                              "詳細はコンソールの"
+                              "メッセージを確認して下さい。"),
+                   TEXT("エラー"),
                    MB_ICONERROR);
         return 1;
     }
@@ -109,7 +146,10 @@ main(int argc, char *argv[])
         if (ERROR_SUCCESS != dwResult) {
             // エラー
             hResult = HRESULT_FROM_WIN32(dwResult);
-            fprintf(stderr, "Registory Set value error: %lx\n", hResult);
+            fprintf(stderr, "%s %lx\n",
+                    GetLastErrorMessage("Registory set value",
+                                        dwResult), hResult);
+            RegCloseKey(hKey);
             return 1;
         }
     }

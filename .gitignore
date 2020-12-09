@@ -1,8 +1,10 @@
 #
 # .gitignore 編集
-# キャッシュを削除
+# キャッシュを削除 (git rm -r --cached . //ファイル全体キャッシュ削除)
 # commit & push
 
 *.exe
+*.zip
 *.o
+*~
 bin/

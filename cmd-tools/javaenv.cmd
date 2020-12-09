@@ -21,7 +21,7 @@ rem 以降は基本的に修正の必要はありません。
 
 SET CMD=%SYSTEMROOT%\System32\cmd
 
-IF NOT "%1"=="" (
+IF NOT %1=="" (
     call :CHG_DIRECTORY "%1"
     cd
 )

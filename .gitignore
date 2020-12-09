@@ -1,0 +1,8 @@
+#
+# .gitignore 編集
+# キャッシュを削除
+# commit & push
+
+*.exe
+*.o
+bin/

@@ -29,6 +29,7 @@ all :
 	cd lha32; make
 	cd MegaFile; make
 	cd TVMaker; make
+	cd pi; make
 	cd tee; make
 	cd wlsfonts; make
 #	cd YdmPoorLineEmu; make
@@ -42,6 +43,7 @@ clean :
 	cd lha32; make clean
 	cd MegaFile; make clean
 	cd TVMaker; make clean
+	cd pi; make clean
 	cd tee; make clean
 	cd wlsfonts; make clean
 #	cd YdmPoorLineEmu; make clean

@@ -12,7 +12,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <time.h>
-#include "unlha32.h"
+#include "UNLHA32.H"
 
 #define BUILD "(BUILD: " __DATE__ " " __TIME__ ")"
 #define VERSION "LHA32 Version 1.00 " BUILD\

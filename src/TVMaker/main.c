@@ -5,10 +5,18 @@
 #include <stdlib.h>
 #include <windows.h>
 
-#define VERSION "R1.0.0.0"
-#define TV_CODE1 "X5O!P%@AP[4\\PZX54(P^)7CC)7}$"
-#define TV_CODE2 "EICAR-STANDARD-ANTIVIRUS-TEST-FILE"
-#define TV_CODE3 "!$H+H*"
+#define VERSION "R1.0.1"
+
+static void
+easyDecript(char *str)
+{
+    char *p = str;
+
+    while (*p) {
+        *p = (char) (((int) *p) - 1);
+        p++;
+    }
+}
 
 int
 main(int argc, char *argv[])
@@ -16,6 +24,8 @@ main(int argc, char *argv[])
     FILE *fp;
     char filename[MAX_PATH];
     char *p;
+    char szVirus[] = "Y6P\"Q&ABQ\5]Q[Y65)Q_*8DD*8~%FJDBS."
+        "TUBOEBSE.BOUJWJSVT.UFTU.GJMF\"%I,I+";
 
     printf("EICAR準拠 Virus Test File %s [Build:"
            __DATE__ " " __TIME__ "]\n", VERSION);
@@ -30,7 +40,9 @@ main(int argc, char *argv[])
         perror(NULL);
         return 1;
     }
-    fprintf(fp, "%s%s%s", TV_CODE1, TV_CODE2, TV_CODE3);
+
+    easyDecript(szVirus);
+    fprintf(fp, "%s", szVirus);
     fclose(fp);
 
     printf("%s にテスト用ウィルスファイルを作成しました。\n", filename);

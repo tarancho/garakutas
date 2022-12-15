@@ -3,12 +3,12 @@
 # 円周率
 #
 CC = x86_64-w64-mingw32-gcc
-CC = i686-w64-mingw32-gcc
+#CC = i686-w64-mingw32-gcc
 CFLAGS= -g -Wall -W -Wformat=2 -Wcast-qual -Wcast-align -Wwrite-strings \
 	-Wconversion -Wfloat-equal -Wpointer-arith \
 	--exec-charset=cp932 --input-charset=utf-8
 
-EXE=pi
+EXE=pi.exe
 OBJS=main.o
 
 ../../bin/$(EXE) : $(EXE)

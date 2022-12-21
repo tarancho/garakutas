@@ -6,5 +6,6 @@
 *.exe
 *.zip
 *.o
+*.out
 *~
 bin/

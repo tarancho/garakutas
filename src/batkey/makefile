@@ -13,7 +13,7 @@
 include version
 
 CC = x86_64-w64-mingw32-gcc
-CC = i686-w64-mingw32-gcc
+#CC = i686-w64-mingw32-gcc
 CFLAGS=-g -Wall --exec-charset=cp932 --input-charset=utf-8
 
 O = o

@@ -32,8 +32,8 @@
 
 typedef struct _list {
     struct _list *next;
-    int fd;     /* ファイル記述子 */
-    char *name; /* argvから取得したファイル名 */
+    int fd;                           /* ファイル記述子 */
+    const char *name;                 /* argvから取得したファイル名 */
 } LIST;
 LIST *head;
 
@@ -66,14 +66,14 @@ showHelp()
 }
 
 static void
-err(int exitCode, char *msg)
+err(int exitCode, const char *msg)
 {
     fprintf(stderr, "%s\n", msg);
     exit(exitCode);
 }
 
 static void
-warn(char *lpFmt, ...)
+warn(const char *lpFmt, ...)
 {
     va_list args;                               // 引数展開用
 
@@ -86,12 +86,12 @@ warn(char *lpFmt, ...)
 }
 
 void
-add(int fd, char *name)
+add(int fd, const char *name)
 {
     LIST *p;
 
     if ((p = malloc((size_t)sizeof(LIST))) == NULL) {
-        err(1, "malloc");
+        err(1, (const char *) "malloc");
     }
     p->fd = fd;
     p->name = name;
@@ -178,7 +178,7 @@ main(int argc, char *argv[])
             n = rval;
             bp = buf;
             do {
-                if ((wval = _write(p->fd, bp, n)) == -1) {
+                if ((wval = _write(p->fd, bp, (unsigned int) n)) == -1) {
                     warn("%s: %s", p->name, _strerror(NULL));
                     exitval = 1;
                     break;
@@ -206,4 +206,3 @@ main(int argc, char *argv[])
     _close(STDOUT_FILENO);
     return exitval;
 }
-

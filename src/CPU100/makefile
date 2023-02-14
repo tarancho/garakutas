@@ -3,8 +3,8 @@
 CC = x86_64-w64-mingw32-gcc
 STRIP = x86_64-w64-mingw32-strip
 
-CC = i686-w64-mingw32-gcc
-STRIP = i686-w64-mingw32-strip
+#CC = i686-w64-mingw32-gcc
+#STRIP = i686-w64-mingw32-strip
 
 CFLAGS=-g -Wall --exec-charset=cp932 --input-charset=utf-8
 

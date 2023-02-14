@@ -125,7 +125,7 @@ selfLoop()
     LONGLONG ftUser;
 
     HANDLE lpLib = LoadLibrary("kernel32.dll");
-    printf("Library Handle: %lx\n", (ULONG) lpLib);
+    printf("Library Handle: %llx\n", (ULONGLONG) lpLib);
     if (!lpLib) {
         return;
     }

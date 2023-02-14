@@ -31,6 +31,9 @@ int CALLBACK EnumFontFamProc(
         return 0;
     }
 
+    (void) lpntm;
+    (void)lParam;
+    
     printf("%s, ", lpelf->elfFullName);
     printf("%s, ", lpelf->elfStyle);
 

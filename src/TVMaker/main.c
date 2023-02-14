@@ -27,6 +27,9 @@ main(int argc, char *argv[])
     char szVirus[] = "Y6P\"Q&ABQ\5]Q[Y65)Q_*8DD*8~%FJDBS."
         "TUBOEBSE.BOUJWJSVT.UFTU.GJMF\"%I,I+";
 
+    (void) argc;
+    (void) argv;
+    
     printf("EICAR準拠 Virus Test File %s [Build:"
            __DATE__ " " __TIME__ "]\n", VERSION);
 

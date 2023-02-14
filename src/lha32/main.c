@@ -28,6 +28,9 @@ main(int argc, char *argv[])
     int ret;
     LPTSTR lpszBuf = malloc(BUF_SIZE + 1);
     LPTSTR p = strchr(GetCommandLine(), ' ');
+    char pTemp[] = "";
+
+    (void) argv;
 
     printf("%s(Version %1g.%1g)\n", VERSION,
            (double)UnlhaGetVersion() / 100,
@@ -47,7 +50,7 @@ main(int argc, char *argv[])
     if (p) {
         p++;
     } else {
-        p = "";
+        p = pTemp;
     }
 
     ret = Unlha(NULL, p, lpszBuf, BUF_SIZE);

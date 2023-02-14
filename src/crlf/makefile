@@ -12,8 +12,10 @@ EXE=crlf.exe
 OBJS=main.o
 
 CC = x86_64-w64-mingw32-gcc
-CC = i686-w64-mingw32-gcc
-CFLAGS=-g -Wall --exec-charset=cp932 --input-charset=utf-8
+# CC = i686-w64-mingw32-gcc
+CFLAGS=-g -Wall -W -Wformat=2 -Wcast-qual -Wcast-align -Wwrite-strings \
+	-Wconversion -Wfloat-equal -Wpointer-arith \
+	--exec-charset=cp932 --input-charset=utf-8
 
 ../../bin/$(EXE) : ../../bin $(EXE)
 	-cp $(EXE) $@

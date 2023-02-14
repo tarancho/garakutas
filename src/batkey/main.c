@@ -34,11 +34,10 @@ GetCh()
 static void
 Usage()
 {
-    // 可能=可\x94\x5c、表示=\x95\x5c示
     fprintf(stderr, "$Id: main.c,v 1.1 2006/11/15 12:08:04 tfuruka1 Exp $\n"
             "Usage: betkey <KeyLists> <Message>\n\n"
-            "KeyLists 入力可\x94\x5cな入力文字を羅列します。\n"
-            "Message  \x95\x5c示するメッセージ\n"
+            "KeyLists 入力可能な入力文字を羅列します。\n"
+            "Message  表示するメッセージ\n"
             "\n"
             "入力された文字のKeyListsの添字(0 align)を返却します。\n"
             "標準入力は使用できません。必ずコンソールから入力する\n"
@@ -67,8 +66,8 @@ int main(int argc, char *argv[])
     printf(":");
     fflush(stdout);
 
-    while (!(p = strchr(argv[1], c = GetCh())));
+    while (!(p = strchr(argv[1], c = (char) GetCh())));
     printf(" [%c]\n", c);
 
-    return (int)((ULONG)p - (ULONG)argv[1]);
+    return (int)((ULONGLONG)p - (ULONGLONG)argv[1]);
 }

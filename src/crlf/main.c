@@ -131,7 +131,7 @@ main(int argc, char *argv[])
                 continue;
             }
 
-            if (!(lpBuf = (LPTSTR) malloc(stat.st_size + 1))) {
+            if (!(lpBuf = (LPTSTR) malloc((size_t) stat.st_size + 1))) {
                 fprintf(stderr, "メモリ不足です。\n");
                 ret++;
                 continue;
@@ -143,11 +143,11 @@ main(int argc, char *argv[])
                 ret++;
                 continue;
             }
-            size = fread(lpBuf, 1, stat.st_size, fp);
+            size = fread(lpBuf, 1, (size_t) stat.st_size, fp);
             if (size != (size_t) stat.st_size) {
                 fprintf(stderr, "入力ファイルを最後迄読み込めません。\n"
                         "\tファイルサイズ: %ld\n"
-                        "\t読み込みサイズ: %u\n", stat.st_size, size);
+                        "\t読み込みサイズ: %llu\n", stat.st_size, size);
                 free(lpBuf);
                 fclose(fp);
                 ret++;

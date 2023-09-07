@@ -5,6 +5,7 @@
  * CPU使用率を100%にしますが、システムの負荷は軽いです。
  */
 #include <windows.h>
+#include <processthreadsapi.h>
 #include <stdio.h>
 
 #define VERSION "R0.1.0.0 ($Rev: 1313 $)"
@@ -12,10 +13,11 @@
 #define LINE_STR "━━━━━━━━━━━━━━━━━"\
                  "━━━━━━━━━━━━━━━━━━"
 
+/* 現在は通常通りリンクできるので不要なコードとなりました
 BOOL (WINAPI *lpGetSystemTimes)(LPFILETIME lpIdleTime,
                                 LPFILETIME lpKernelTime,
                                 LPFILETIME lpUserTime);
-
+*/
 static LPCTSTR
 GetProcessorArchitectureStr(WORD wPA)
 {
@@ -40,11 +42,17 @@ GetProcessorArchitectureStr(WORD wPA)
     case PROCESSOR_ARCHITECTURE_ARM:
         strcpy(szBuf, "ARM");
         break;
+    case PROCESSOR_ARCHITECTURE_ARM64:
+        strcpy(szBuf, "ARM64");
+        break;
     case PROCESSOR_ARCHITECTURE_IA64:
         strcpy(szBuf, "INTEL-64");
         break;
     case PROCESSOR_ARCHITECTURE_ALPHA64:
         strcpy(szBuf, "ALPHA-64");
+        break;
+    case PROCESSOR_ARCHITECTURE_AMD64:
+        strcpy(szBuf, "x64(AMD or Intel)");
         break;
     case PROCESSOR_ARCHITECTURE_UNKNOWN:
         strcpy(szBuf, "UNKNOWN");
@@ -77,6 +85,15 @@ GetProcessorTypeStr(DWORD dwPt)
     case PROCESSOR_ALPHA_21064:
         sprintf(szBuf, "ALPHA 21064(%lu)", dwPt);
         break;
+    case PROCESSOR_INTEL_IA64:
+        sprintf(szBuf, "INTEL IA64(%lu)", dwPt);
+        break;
+    case PROCESSOR_AMD_X8664:
+        sprintf(szBuf, "AMD X8664(%lu)", dwPt);
+        break;
+    case PROCESSOR_ARM720:
+        sprintf(szBuf, "ARM(%lu)", dwPt);
+        break;
     default:
         sprintf(szBuf, "UNKNOWn(%lu)", dwPt);
         break;
@@ -85,7 +102,7 @@ GetProcessorTypeStr(DWORD dwPt)
 }
 
 static LPCTSTR
-GetActiveProcessorMaskStr(DWORD dwAPM)
+GetActiveProcessorMaskStr(DWORD_PTR dwAPM)
 {
     static char szBuf[36];
     int i;
@@ -124,17 +141,20 @@ selfLoop()
     LONGLONG ftKernel;
     LONGLONG ftUser;
 
+/* 現在は通常通りリンクできるので不要なコードとなりました。
     HANDLE lpLib = LoadLibrary("kernel32.dll");
     printf("Library Handle: %llx\n", (ULONGLONG) lpLib);
     if (!lpLib) {
         return;
     }
+
     lpGetSystemTimes = GetProcAddress(lpLib, "GetSystemTimes");
 
     printf("GetSystemTimes API Address: %lx\n", (ULONG) lpGetSystemTimes);
     if (!lpGetSystemTimes) {
         return;
     }
+*/
     printf("終了する場合は CTRL-C を押下して下さい。\n\n");
 
     while (TRUE) {
@@ -143,9 +163,9 @@ selfLoop()
         wk[1] = kaiten[j * 2 + 1];
         wk[2] = '\0';
 
-        lpGetSystemTimes((LPFILETIME)&ftIdle,
-                         (LPFILETIME)&ftKernel,
-                         (LPFILETIME)&ftUser);
+        GetSystemTimes((LPFILETIME)&ftIdle,
+                       (LPFILETIME)&ftKernel,
+                       (LPFILETIME)&ftUser);
         if (0 != ftOldIdle) {
             LONGLONG llIdle = ftIdle - ftOldIdle;
             LONGLONG llKernel = ftKernel - ftOldKernel;
@@ -156,9 +176,9 @@ selfLoop()
             sprintf(szBuf,
                     "[%s] %5.1f%% user, %5.1f%% system, %5.1f%% idle",
                     wk,
-                    ((LONGLONG) 1000 * llUser / llTotal) / 10.0,
-                    ((LONGLONG) 1000 * llKernel / llTotal) / 10.0,
-                    ((LONGLONG) 1000 * llIdle / llTotal) / 10.0);
+                    (double) ((LONGLONG) 1000 * llUser / llTotal) / 10.0,
+                    (double) ((LONGLONG) 1000 * llKernel / llTotal) / 10.0,
+                    (double) ((LONGLONG) 1000 * llIdle / llTotal) / 10.0);
             printf("\r%s", szBuf);
             fflush(stdout);
 
@@ -181,6 +201,9 @@ main(int argc, char *argv[])
     SYSTEM_INFO si;
     int i;
 
+    (void) argc;
+    (void) argv;
+
     GetSystemInfo(&si);
 
     printf("$Id: main.c 1313 2013-03-19 00:10:02Z tfuruka1 $\n");
@@ -190,10 +213,10 @@ main(int argc, char *argv[])
     printf("Processor architecture     : %s\n",
            GetProcessorArchitectureStr(si.wProcessorArchitecture));
     printf("Page size                  : %ld\n", si.dwPageSize);
-    printf("Minimun application address: %lx\n",
-           (ULONG) si.lpMinimumApplicationAddress);
-    printf("Maximum application address: %lx\n",
-           (ULONG) si.lpMaximumApplicationAddress);
+    printf("Minimun application address: %p\n",
+           si.lpMinimumApplicationAddress);
+    printf("Maximum application address: %p\n",
+           si.lpMaximumApplicationAddress);
     printf("Active processor mask      : 0123456789*123456789*123456789*1\n");
     printf("                           : %s\n",
            GetActiveProcessorMaskStr(si.dwActiveProcessorMask));
@@ -207,7 +230,7 @@ main(int argc, char *argv[])
            si.wProcessorRevision & 0xff);
     printf(LINE_STR "\n");
 
-    for (i = 0; i < si.dwNumberOfProcessors; i++) {
+    for (i = 0; i < (int) si.dwNumberOfProcessors; i++) {
         DWORD dwThreadId;
         HANDLE hThread = CreateThread(NULL, 0, ThreadFunc, (LPVOID) &i, 0,
                                       &dwThreadId);

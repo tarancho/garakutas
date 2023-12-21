@@ -62,11 +62,14 @@ MinGWへの移行を完了していません。
  <relation>6</relation>
 #+END_SRC
 
-
 *** img2java
 *** lha32
-*** makefile
+
 *** tee
+
+Linux の tee コマンドのクローンです。標準出力とファイルの両方に出力す
+るコマンドです。
+
 *** wlsfonts
 
 * Build

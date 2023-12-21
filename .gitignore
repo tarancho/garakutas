@@ -9,4 +9,4 @@
 *.out
 *~
 bin/
-src/out/
+out/

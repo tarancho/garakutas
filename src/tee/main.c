@@ -18,7 +18,7 @@
 
 #include <getopt.h>
 
-#define VERSION "1.0 ($Rev$)"
+#define VERSION "1.0 (Build: " __DATE__ " " __TIME__ ")"
 
 #define BSIZE (8 * 1024)
 
@@ -61,7 +61,7 @@ showHelp()
            "ファイルに - を指定した場合は、再度、標準出力に出力します.\n"
            "\n"
            "本コマンドはオリジナルのteeコマンドの挙動と同様になるように"
-           "T.Furukawaが実装したものです。"
+           " T.Furukawa が実装したものです。"
            "従って、オリジナルと異なる部分もあるかもしれません。\n");
 }
 

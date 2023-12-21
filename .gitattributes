@@ -1,5 +1,7 @@
 *           text=auto
 *.txt       text
+*.c         text eol=lf
+*.h         text eol=lf
 *.sh        text eol=lf
 *.jpg       -text
 *.cmd       text eol=crlf encoding=cp932

@@ -11,7 +11,5 @@ add_compile_options(-Wpointer-arith)
 add_compile_options(--input-charset=utf-8)
 add_compile_options(--exec-charset=cp932)
 
-set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/../..")
-
 add_executable(cpu100.exe main.c)
-INSTALL(TARGETS cpu100.exe RUNTIME DESTINATION bin)
+install(TARGETS cpu100.exe DESTINATION bin)

@@ -12,3 +12,4 @@ add_compile_options(--input-charset=utf-8)
 add_compile_options(--exec-charset=cp932)
 
 add_executable(batkey.exe main.c)
+install(TARGETS batkey.exe DESTINATION bin)

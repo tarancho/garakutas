@@ -12,3 +12,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --exec-charset=cp932")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --input-charset=utf-8")
 
 add_executable(tee.exe main.c)
+
+install(TARGETS tee.exe DESTINATION bin)
+
+

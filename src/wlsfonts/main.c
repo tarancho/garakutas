@@ -19,7 +19,50 @@
 
 static BOOL bLongFormat = FALSE;
 
-int CALLBACK EnumFontFamProc(
+/*
+ * 文字セット名称の取得。
+ */
+static const char *
+getCharSetString(
+    BYTE lfCharSet                              /* 文字セットコード */
+    )
+{
+    static struct charset {
+        BYTE lfCharSet;
+        const char *lpszCharSet;
+    } tbl[] = {
+        {ANSI_CHARSET, "ANSI"},
+        {BALTIC_CHARSET, "BALTIC"},
+        {CHINESEBIG5_CHARSET, "CHINESEBIG5"},
+        {DEFAULT_CHARSET, "DEFAULT"},
+        {EASTEUROPE_CHARSET, "EASTEUROPE"},
+        {GB2312_CHARSET, "GB2312"},
+        {GREEK_CHARSET, "GREEK"},
+        {HANGUL_CHARSET, "HANGUL"},
+        {MAC_CHARSET, "MAC"},
+        {OEM_CHARSET, "OEM"},
+        {RUSSIAN_CHARSET, "RUSSIAN"},
+        {SHIFTJIS_CHARSET, "SHIFTJIS"},
+        {SYMBOL_CHARSET, "SYMBOL"},
+        {TURKISH_CHARSET, "TURKISH"},
+        {VIETNAMESE_CHARSET, "VIETNAMESE"},
+        {JOHAB_CHARSET, "JOHAB"},
+        {ARABIC_CHARSET, "ARABIC"},
+        {HEBREW_CHARSET, "HEBREW"},
+        {THAI_CHARSET, "THAI"}
+    };
+    static const char *lpszUnknown = "不明";
+
+    for (size_t i = 0; i < sizeof(tbl) / sizeof(struct charset); i++) {
+        if (lfCharSet == tbl[i].lfCharSet) {
+            return tbl[i].lpszCharSet;
+        }
+    }
+    return lpszUnknown;
+}
+
+int CALLBACK
+EnumFontFamProc(
     ENUMLOGFONT FAR *lpelf,             // pointer to logical-font data
     NEWTEXTMETRIC FAR *lpntm,           // pointer to physical-font data
     int FontType,                       // type of font
@@ -32,14 +75,14 @@ int CALLBACK EnumFontFamProc(
     }
 
     (void) lpntm;
-    (void)lParam;
-    
+    (void) lParam;
+
     printf("%s, ", lpelf->elfFullName);
     printf("%s, ", lpelf->elfStyle);
 
     // -- FontType
     printf("%x - ", FontType);
-    printf("%s", (FontType & DEVICE_FONTTYPE) ? "DDevice " : "");
+    printf("%s", (FontType & DEVICE_FONTTYPE) ? "Device " : "");
     printf("%s", (FontType & RASTER_FONTTYPE) ? "Raster " : "");
     printf("%s", (FontType & TRUETYPE_FONTTYPE) ? "TrueType" : "");
     if (bLongFormat) {
@@ -54,13 +97,8 @@ int CALLBACK EnumFontFamProc(
         printf("%s, ", lpLf->lfUnderline ? "true" : "false");
         printf("%s, ", lpLf->lfStrikeOut ? "true" : "false");
         //-- 文字セット
-        printf("%x - ", lpLf->lfCharSet);
-        printf("%s, ", ANSI_CHARSET == lpLf->lfCharSet ? "ANSI" :
-               (OEM_CHARSET == lpLf->lfCharSet ? "OEM" :
-                (SYMBOL_CHARSET == lpLf->lfCharSet ? "SYMBOL" :
-                 (DEFAULT_CHARSET == lpLf->lfCharSet ? "DEFAULT" :
-                  (SHIFTJIS_CHARSET == lpLf->lfCharSet ? "SJIS" :
-                   "不明")))));
+        printf("%02x - ", lpLf->lfCharSet);
+        printf("%s, ", getCharSetString(lpLf->lfCharSet));
         //--
         printf("%x, ", lpLf->lfOutPrecision);
         printf("%x, ", lpLf->lfClipPrecision);

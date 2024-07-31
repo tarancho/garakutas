@@ -72,16 +72,21 @@ Linux の tee コマンドのクローンです。標準出力とファイルの
 
 *** wlsfonts
 
+*** weekNumber
+
+特定の曜日の週番号と日付を列挙します。
+
 * Build
 
 MinGW(x86_64-w64-mingw32-gcc (GCC) 7.4.0)でbuildできます。元々はVC6と
 Cygwinのgccを使用していましたが、現在はMinGWに統一しました。ソースコー
 ドもutf-8に統一しています。scrディレクトリで
 #+BEGIN_EXAMPLE
-make
+cmake -B out -G Ninja
+ninja -C out
 #+END_EXAMPLE
 と入力する事により、全ての実行ファイルをbinディレクトリへ生成します。
-詳細は、makefile を参照して下さい。
+詳細は、=src/CMakeLists.txt= を参照して下さい。
 
 ** 私の環境以外で修正が必要なmakefile
 
